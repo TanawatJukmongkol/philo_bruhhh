@@ -6,18 +6,20 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/11 16:57:45 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/11 19:19:51 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <pthread.h>
+#include <sys/time.h>
 
 int	parse_args(int argc, char**argv, int *ac, int **av)
 {
 	*av = argv_getint(ac, argv);
 	if ((!*av && argc > 1) || (*ac > 0 && (*av[0] <= 0)))
 	{
+		free(*av);
 		printf("Invalid argument passed.\n");
 		return (1);
 	}
@@ -25,13 +27,13 @@ int	parse_args(int argc, char**argv, int *ac, int **av)
 	{
 		free(*av);
 		printf("No argument passed.\nUsage: ");
-		printf("./philo nbr_philo time_to_live time_to_eat time_to_sleep\n");
+		printf("./philo nbr_philo time_to_live time_to_eat time_to_sleep must_eat\n");
 		return (1);
 	}
 	if (*ac < 4 || *ac > 5)
 	{
-		printf("Too few / too much arguments.\n");
 		free(*av);
+		printf("Too few / too much arguments.\n");
 		return (1);
 	}
 	return (0);
@@ -99,6 +101,14 @@ void	*routine(void *philo)
 	return (NULL);
 }
 
+int	ms_get_epoch()
+{
+	t_timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
 int	spawn_philo(t_table *table)
 {
 	int	i;
@@ -129,7 +139,13 @@ int	main(int argc, char**argv)
 		return (1);
 	spawn_philo(&table);
 	while (1)
+	{
+		if (table.halt == 1)
+			printf("Philosopher ");
+		else if (table.halt == 2)
+			printf("All philosopher has eaten.");
 		usleep(10);
+	}
 	free_all(&table);
 	return (0);
 }
