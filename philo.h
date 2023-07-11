@@ -6,14 +6,12 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/10 22:49:21 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:46:40 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
-# define DEBUG_MODE 0
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,8 +22,11 @@
 
 typedef struct s_philo
 {
+	pthread_t		thread;
 	pthread_mutex_t	mutx_fork;
 	pthread_mutex_t	*mutx_table;
+	struct s_philo	*right;
+	struct s_philo	*left;
 	int				id;
 }	t_philo;
 
