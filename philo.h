@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/11 19:20:38 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/11 21:11:35 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_philo
 	struct s_philo	*right;
 	struct s_philo	*left;
 	enum e_status	status;
+	long			ms_begin;
+	long			ms_now;
 	int				id;
 }	t_philo;
 
@@ -61,5 +63,16 @@ typedef struct s_table
 	int				argc;
 	int				*argv;
 }				t_table;
+
+// utils
+void	free_all(t_table *table);
+int		init_each_data(t_table *table, int i, int *argv);
+int		init_data(t_table *table, int argc, int *argv);
+long	ms_get_epoch(void);
+void	ms_sleep(t_philo *ph, int ms);
+
+// threading
+void	*routine(void *philo);
+int		spawn_philo(t_table *table);
 
 #endif
