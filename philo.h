@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/11 21:11:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/12 18:18:13 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_table
 	t_philo			*philo;
 	pthread_mutex_t	mutx;
 	t_rule			rules;
+	long			ms_begin;
 	int				len;
 	int				halt;
 	int				argc;
