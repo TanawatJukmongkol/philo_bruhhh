@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 19:42:25 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:07:09 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,21 @@ void	free_all(t_table *table)
 		free(table->argv);
 }
 
-int	init_each_data(t_table *table, int i, int *argv)
+int	init_each_data(t_table *table, int i, int argc, int *argv)
 {
 	table->philo[i].mutx_table = &table->mutx;
 	table->philo[i].ms_begin = &table->ms_begin;
+	table->philo[i].rules.time_to_die = argv[1];
+	table->philo[i].rules.time_to_eat = argv[2];
+	table->philo[i].rules.time_to_sleep = argv[3];
+	table->philo[i].rules.time_to_live = argv[1];
+	table->philo[i].rules.must_eat = -1;
+	table->philo[i].rules.eaten = 0;
+	if (argc == 5)
+		table->philo[i].rules.must_eat = argv[4];
 	if (pthread_mutex_init(&table->philo[i].mutx_fork, NULL))
-	{
-		free_all(table);
-		return (1);
-	}
+		return (philo_error(table,
+				"Failed to spawn philo: Failed to create mutex."));
 	table->philo[i].id = i + 1;
 	if (i - 1 >= 0)
 		table->philo[i].left = &table->philo[i - 1];
@@ -59,11 +65,10 @@ int	init_data(t_table *table, int argc, int *argv)
 	table->len = argv[0];
 	table->argc = argc;
 	table->argv = argv;
-	table->rules.time_to_die = argv[1];
 	i = 0;
 	while (i < argv[0])
 	{
-		if (init_each_data(table, i, argv))
+		if (init_each_data(table, i, argc, argv))
 			return (1);
 		i++;
 	}
@@ -80,10 +85,24 @@ long	ms_get_epoch(void)
 
 void	ms_sleep(t_philo *ph, int ms)
 {
-	while (1)
+	long	time;
+	long	p_time;
+
+	p_time = ms_get_epoch();
+	while (ph->status != _dead)
 	{
-		usleep(10);
-		if (ms_get_epoch() - ph->ms_now >= ms)
+		usleep(1);
+		time = ms_get_epoch();
+		if (p_time < time)
+		{
+			ph->rules.time_to_live -= time - p_time;
+			if (ph->rules.time_to_live < 0)
+				break ;
+			p_time = time;
+		}
+		if (time - ph->ms_now >= ms)
 			break ;
 	}
+	if (ph->rules.time_to_live <= 0)
+		ph->status = _dead;
 }

@@ -6,12 +6,12 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 05:42:52 by tjukmong          #+#    #+#              #
-#    Updated: 2023/07/11 21:02:57 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/07/12 22:32:22 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
-SRCS		= philo.c utils.c threading.c
+SRCS		= philo.c utils.c message.c threading.c
 
 SRC_DIR		= ./
 LIB_DIR		= ./lib/

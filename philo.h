@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 20:05:58 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:45:42 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "lib/miniutils/miniutils.h"
-
-# define MS_OFFSET ph->ms_now - *ph->ms_begin
-# define PRINT(msg) printf("%-8ld %-3d %s\n", MS_OFFSET, ph->id, msg)
 
 typedef struct timeval	t_timeval;
 
@@ -51,6 +48,7 @@ typedef struct s_philo
 	struct s_philo	*right;
 	struct s_philo	*left;
 	enum e_status	status;
+	t_rule			rules;
 	long			*ms_begin;
 	long			ms_now;
 	int				id;
@@ -60,7 +58,6 @@ typedef struct s_table
 {
 	t_philo			*philo;
 	pthread_mutex_t	mutx;
-	t_rule			rules;
 	long			ms_begin;
 	int				len;
 	int				halt;
@@ -70,10 +67,14 @@ typedef struct s_table
 
 // utils
 void	free_all(t_table *table);
-int		init_each_data(t_table *table, int i, int *argv);
+int		init_each_data(t_table *table, int i, int argc, int *argv);
 int		init_data(t_table *table, int argc, int *argv);
 long	ms_get_epoch(void);
 void	ms_sleep(t_philo *ph, int ms);
+
+// message
+void	philo_log(t_philo *ph, char *msg);
+int		philo_error(t_table *table, char *msg);
 
 // threading
 void	*routine(void *philo);
