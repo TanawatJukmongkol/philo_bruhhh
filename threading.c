@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 19:03:07 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 19:21:23 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	spawn_philo(t_table *table)
 			free_all(table);
 			return (1);
 		}
-		usleep(50);
+		usleep(100);
 		pthread_detach(table->philo[i].thread);
 		i++;
 	}
