@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/11 21:56:23 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 01:25:24 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	parse_args(int argc, char**argv, int *ac, int **av)
 int	main(int argc, char**argv)
 {
 	t_table	table;
+	int		i;
 	int		ac;
 	int		*av;
 
@@ -51,11 +52,14 @@ int	main(int argc, char**argv)
 	spawn_philo(&table);
 	while (1)
 	{
-		// if (table.halt == 1)
-		// 	printf("Philosopher xx died.\n");
-		// else if (table.halt == 2)
-		// 	printf("All philosopher has eaten.\n");
-		usleep(10);
+		i = 0;
+		while (i < table.len)
+		{
+			if (table.philo[i].status == _dead)
+				exit(0);
+			i++;
+		}
+		usleep(200);
 	}
 	free_all(&table);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 23:07:09 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 01:08:46 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ void	free_all(t_table *table)
 
 int	init_each_data(t_table *table, int i, int argc, int *argv)
 {
+	table->philo[i].id = i + 1;
 	table->philo[i].mutx_table = &table->mutx;
 	table->philo[i].ms_begin = &table->ms_begin;
+	table->philo[i].fork_taken = 0;
 	table->philo[i].rules.time_to_die = argv[1];
 	table->philo[i].rules.time_to_eat = argv[2];
 	table->philo[i].rules.time_to_sleep = argv[3];
@@ -41,7 +43,6 @@ int	init_each_data(t_table *table, int i, int argc, int *argv)
 	if (pthread_mutex_init(&table->philo[i].mutx_fork, NULL))
 		return (philo_error(table,
 				"Failed to spawn philo: Failed to create mutex."));
-	table->philo[i].id = i + 1;
 	if (i - 1 >= 0)
 		table->philo[i].left = &table->philo[i - 1];
 	else

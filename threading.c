@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 23:08:31 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 01:21:41 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,52 @@ void	*routine(void *philo)
 
 	ph = (t_philo *)philo;
 	ph->ms_now = ms_get_epoch();
+	if (ph->id % 2 && !ph->fork_taken)
+	{
+		ph->fork_taken = 1;
+		ph->left->fork_taken = 1;
+		ph->status = _eat;
+	}
+	else
+		ph->status = _think;
 	while (ph->status != _dead)
 	{
-		philo_log(ph, "is thinking");
-		ms_sleep(ph, 1000);
+		if (ph->status == _think)
+		{
+			philo_log(ph, "is thinking");
+			while (ph->status == _think)
+			{
+				pthread_mutex_lock(&ph->mutx_fork);
+				if (!ph->fork_taken && !ph->left->fork_taken)
+				{
+					ph->fork_taken = 1;
+					ph->left->fork_taken = 1;
+					ph->status = _eat;
+					pthread_mutex_unlock(&ph->mutx_fork);
+					break ;
+				}
+				else
+					ms_sleep(ph, 5);
+				pthread_mutex_unlock(&ph->mutx_fork);
+			}
+		}
+		else if (ph->status == _eat)
+		{
+			philo_log(ph, "is eating");
+			ph->rules.time_to_live = ph->rules.time_to_die;
+			ms_sleep(ph, ph->rules.time_to_eat);
+			ph->status = _sleep;
+		}
+		else if (ph->status == _sleep)
+		{
+			philo_log(ph, "is sleeping");
+			pthread_mutex_lock(&ph->mutx_fork);
+			ph->fork_taken = 0;
+			ph->left->fork_taken = 0;
+			pthread_mutex_unlock(&ph->mutx_fork);
+			ms_sleep(ph, ph->rules.time_to_sleep);
+			ph->status = _think;
+		}
 	}
 	philo_log(ph, "died");
 	return (NULL);
