@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 18:18:57 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 18:53:48 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ms_sleep(t_philo *ph, int ms)
 {
 	while (1)
 	{
-		usleep(5);
+		usleep(10);
 		if (ms_get_epoch() - ph->ms_now >= ms)
 			break ;
 	}

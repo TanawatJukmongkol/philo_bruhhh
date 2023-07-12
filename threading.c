@@ -6,11 +6,12 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 18:22:45 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 19:03:07 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 void	*routine(void *philo)
 {
@@ -21,8 +22,10 @@ void	*routine(void *philo)
 	while (1)
 	{
 		ph->ms_now = ms_get_epoch();
+		// pthread_mutex_lock(ph->mutx_table);
 		printf("%ld %d %s\n", ph->ms_now - ph->ms_begin, ph->id, "");
-		ms_sleep(ph, 20);
+		// pthread_mutex_unlock(ph->mutx_table);
+		ms_sleep(ph, 50);
 	}
 	return (NULL);
 }
@@ -41,11 +44,9 @@ int	spawn_philo(t_table *table)
 			free_all(table);
 			return (1);
 		}
+		usleep(50);
 		pthread_detach(table->philo[i].thread);
-		usleep(10);
-		i += 2;
-		if (i >= table->len && i % 2 == 0)
-			i = 1;
+		i++;
 	}
 	return (0);
 }
