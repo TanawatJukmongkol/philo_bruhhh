@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 19:44:40 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/12 19:55:56 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	*routine(void *philo)
 	{
 		pthread_mutex_lock(ph->mutx_table);
 		ph->ms_now = ms_get_epoch();
-		printf("%ld %d %s\n", ph->ms_now - *ph->ms_begin, ph->id, "");
+		PRINT("is thinking");
 		pthread_mutex_unlock(ph->mutx_table);
-		ms_sleep(ph, 10);
+		ms_sleep(ph, 600);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 19:42:09 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/12 20:05:58 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@
 # include <sys/time.h>
 # include "lib/miniutils/miniutils.h"
 
-# define t_timeval struct timeval
+# define MS_OFFSET ph->ms_now - *ph->ms_begin
+# define PRINT(msg) printf("%-8ld %-3d %s\n", MS_OFFSET, ph->id, msg)
+
+typedef struct timeval	t_timeval;
 
 enum e_status
 {
@@ -35,7 +38,7 @@ typedef struct s_rule
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
-	int time_to_live;
+	int	time_to_live;
 	int	must_eat;
 	int	eaten;
 }	t_rule;
