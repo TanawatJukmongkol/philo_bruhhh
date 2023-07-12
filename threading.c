@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 19:21:23 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 19:44:40 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,13 @@ void	*routine(void *philo)
 	t_philo	*ph;
 
 	ph = (t_philo *)philo;
-	ph->ms_begin = ph->ms_begin + (ms_get_epoch() - ph->ms_begin); 
 	while (1)
 	{
+		pthread_mutex_lock(ph->mutx_table);
 		ph->ms_now = ms_get_epoch();
-		// pthread_mutex_lock(ph->mutx_table);
-		printf("%ld %d %s\n", ph->ms_now - ph->ms_begin, ph->id, "");
-		// pthread_mutex_unlock(ph->mutx_table);
-		ms_sleep(ph, 50);
+		printf("%ld %d %s\n", ph->ms_now - *ph->ms_begin, ph->id, "");
+		pthread_mutex_unlock(ph->mutx_table);
+		ms_sleep(ph, 10);
 	}
 	return (NULL);
 }
@@ -44,9 +43,11 @@ int	spawn_philo(t_table *table)
 			free_all(table);
 			return (1);
 		}
-		usleep(100);
+		usleep(5);
 		pthread_detach(table->philo[i].thread);
-		i++;
+		i += 2;
+		if (i > table->len && i % 2 == 0)
+			i = 1;
 	}
 	return (0);
 }

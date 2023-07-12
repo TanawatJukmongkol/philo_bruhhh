@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 18:53:48 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 19:42:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_all(t_table *table)
 int	init_each_data(t_table *table, int i, int *argv)
 {
 	table->philo[i].mutx_table = &table->mutx;
-	table->philo[i].ms_begin = table->ms_begin;
+	table->philo[i].ms_begin = &table->ms_begin;
 	if (pthread_mutex_init(&table->philo[i].mutx_fork, NULL))
 	{
 		free_all(table);

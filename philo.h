@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 18:18:13 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/12 19:42:09 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 	struct s_philo	*right;
 	struct s_philo	*left;
 	enum e_status	status;
-	long			ms_begin;
+	long			*ms_begin;
 	long			ms_now;
 	int				id;
 }	t_philo;
