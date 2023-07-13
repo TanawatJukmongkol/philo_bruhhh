@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 21:54:00 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 22:03:15 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	*routine(void *philo)
 	if (ph->id % 2 == 0 && !ph->fork_taken)
 		take_fork(ph);
 	else
+	{
 		ph->status = _think;
+		usleep(500);
+	}
 	while (ph->status != _dead)
 	{
 		if (ph->status == _think)

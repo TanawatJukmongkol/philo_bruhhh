@@ -6,7 +6,7 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 05:42:52 by tjukmong          #+#    #+#              #
-#    Updated: 2023/07/13 20:15:09 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/07/13 22:00:16 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRC			= ${addprefix ${BUILD_DIR},${SRCS}}
 OBJ			= ${SRC:.c=.o}
 
 CC			= cc
-# CFLAGS		= -g -Wall -Werror -Wextra -O3 -fsanitize=address
-CFLAGS		= -g -Wall -Werror -Wextra -O3
+CFLAGS		= -g -Wall -Werror -Wextra -O3 -fsanitize=address
+# CFLAGS		= -g -Wall -Werror -Wextra -O3
 # CFLAGS		= -g -fsanitize=address
 
 all: library ${BUILD_DIR} ${NAME}
