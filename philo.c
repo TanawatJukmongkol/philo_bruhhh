@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:14:58 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:43:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ int	parse_args(int argc, char**argv, int *ac, int **av)
 void	main_routine(t_table *table)
 {
 	int	i;
+	int	nbr;
 
 	while (1)
 	{
 		i = -1;
+		nbr = 0;
 		usleep(1);
 		while (++i < table->len)
 		{
@@ -58,6 +60,18 @@ void	main_routine(t_table *table)
 				free_all(table);
 				return ;
 			}
+			nbr += table->philo[i].rules.eaten == table->philo[i]
+				.rules.must_eat;
+		}
+		i = -1;
+		if (table->argc == 5 && nbr == table->len)
+		{
+			while (++i < table->len)
+				table->philo[i].status = _dead;
+			usleep(15000);
+			printf("-- All Philosophers has eaten %d times --\n",
+				table->argv[4]);
+			return ;
 		}
 	}
 }

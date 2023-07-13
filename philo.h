@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:13:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:13:41 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_table
 	pthread_mutex_t	mutx;
 	long			ms_begin;
 	int				len;
-	int				halt;
 	int				argc;
 	int				*argv;
 }				t_table;
@@ -73,6 +72,7 @@ void	free_all(t_table *table);
 int		init_each_data(t_table *table, int i, int argc, int *argv);
 int		init_data(t_table *table, int argc, int *argv);
 long	ms_get_epoch(void);
+int		check_die(t_philo *ph, long time);
 void	ms_sleep(t_philo *ph, int ms);
 
 // message

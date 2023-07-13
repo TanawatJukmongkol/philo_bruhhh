@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:16:34 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:44:38 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,25 @@ long	ms_get_epoch(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+int	check_die(t_philo *ph, long time)
+{
+	if (time >= ph->rules.time_to_live)
+	{
+		ph->status = _dead;
+		return (1);
+	}
+	return (0);
+}
+
 void	ms_sleep(t_philo *ph, int ms)
 {
 	long	time;
 
 	while (ph->status != _dead)
 	{
+		usleep(1);
 		time = ms_get_epoch();
-		if (time >= ph->rules.time_to_live)
-		{
-			ph->status = _dead;
+		if (check_die(ph, time) || time - ph->ms_now >= ms)
 			break ;
-		}
-		if (time - ph->ms_now >= ms)
-			break ;
-		usleep(10);
 	}
 }

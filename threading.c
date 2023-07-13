@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:17:00 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 19:47:15 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	take_fork(t_philo *ph)
 			philo_log(ph, "took the right fork");
 		ph->fork_taken = 1;
 		ph->status = _eat;
+		if (ph->rules.eaten < ph->rules.must_eat)
+			ph->rules.eaten++;
 		pthread_mutex_unlock(&ph->mutx_fork);
 		return (0);
 	}
@@ -73,8 +75,8 @@ void	*routine(void *philo)
 		{
 			philo_log(ph, "is eating");
 			ph->rules.time_to_live += ph->rules.time_to_die;
-			ms_sleep(ph, ph->rules.time_to_eat);
 			ph->status = _sleep;
+			ms_sleep(ph, ph->rules.time_to_eat);
 		}
 		else if (ph->status == _sleep)
 		{
@@ -83,7 +85,6 @@ void	*routine(void *philo)
 			ms_sleep(ph, ph->rules.time_to_sleep);
 		}
 	}
-	sleep(10);
 	return (NULL);
 }
 
@@ -100,7 +101,7 @@ int	spawn_philo(t_table *table)
 				routine, &table->philo[i]))
 			return (philo_error(table,
 					"Failed to spawn philo: Failed to create thread."));
-		usleep(1);
+		usleep(5);
 		pthread_detach(table->philo[i].thread);
 		i += 2;
 		if (i >= table->len && i % 2 == 0)
