@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 20:54:02 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:19:35 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	destroy_mutx(t_table *table)
 {
 	while (table->len)
 	{
-		pthread_mutex_destroy(&table->philo[table->len].mutx_fork);
+		pthread_mutex_destroy(&table->philo[table->len - 1].mutx_fork);
 		table->len--;
 	}
 	pthread_mutex_destroy(&table->mutx);
