@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 19:43:00 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:48:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ void	main_routine(t_table *table)
 		{
 			if (table->philo[i].status == _dead)
 			{
-				philo_log(&table->philo[i], "died");
+				destroy_mutx(table);
+				printf("%ld %d died", ms_get_epoch() - table->philo[i].ms_begin, table->philo[i].id);
 				i = -1;
 				while (++i < table->len)
 					table->philo[i].status = _dead;
-				free_all(table);
 				return ;
 			}
 			nbr += table->philo[i].rules.eaten == table->philo[i]
@@ -87,5 +87,7 @@ int	main(int argc, char**argv)
 		return (1);
 	spawn_philo(&table);
 	main_routine(&table);
+	usleep(1000);
+	free_all(&table);
 	return (0);
 }

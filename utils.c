@@ -6,13 +6,13 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:44:38 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:49:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_all(t_table *table)
+void	destroy_mutx(t_table *table)
 {
 	pthread_mutex_destroy(&table->mutx);
 	while (table->len)
@@ -20,6 +20,10 @@ void	free_all(t_table *table)
 		pthread_mutex_destroy(&table->philo[table->len].mutx_fork);
 		table->len--;
 	}
+}
+
+void	free_all(t_table *table)
+{
 	if (table->philo)
 	{
 		free(table->philo);
@@ -62,7 +66,7 @@ int	init_data(t_table *table, int argc, int *argv)
 	table->len = 0;
 	table->argv = NULL;
 	table->philo = malloc(argv[0] * sizeof(t_philo));
-	if (!table->philo || pthread_mutex_init(&table->mutx, NULL))
+	if (pthread_mutex_init(&table->mutx, NULL))
 		return (1);
 	table->len = argv[0];
 	table->argc = argc;
@@ -87,11 +91,15 @@ long	ms_get_epoch(void)
 
 int	check_die(t_philo *ph, long time)
 {
+	if (pthread_mutex_lock(ph->mutx_table))
+		return (1);
 	if (time >= ph->rules.time_to_live)
 	{
 		ph->status = _dead;
+		pthread_mutex_unlock(ph->mutx_table);
 		return (1);
 	}
+	pthread_mutex_unlock(ph->mutx_table);
 	return (0);
 }
 

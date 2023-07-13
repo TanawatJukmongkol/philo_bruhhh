@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 19:13:41 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:06:54 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_table
 }				t_table;
 
 // utils
+void	destroy_mutx(t_table *table);
 void	free_all(t_table *table);
 int		init_each_data(t_table *table, int i, int argc, int *argv);
 int		init_data(t_table *table, int argc, int *argv);

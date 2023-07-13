@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 19:47:15 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 20:29:59 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 int	take_fork(t_philo *ph)
 {
-	pthread_mutex_lock(&ph->mutx_fork);
+	if (pthread_mutex_lock(&ph->mutx_fork))
+		return (1);
 	if (ph->fork_taken && ph->left->fork_taken)
 	{
 		pthread_mutex_unlock(&ph->mutx_fork);
@@ -44,7 +45,8 @@ int	take_fork(t_philo *ph)
 
 void	release_fork(t_philo *ph)
 {
-	pthread_mutex_lock(&ph->mutx_fork);
+	if (pthread_mutex_lock(&ph->mutx_fork))
+		return ;
 	ph->fork_taken = 0;
 	ph->left->fork_taken = 0;
 	ph->status = _think;
@@ -74,9 +76,9 @@ void	*routine(void *philo)
 		else if (ph->status == _eat)
 		{
 			philo_log(ph, "is eating");
-			ph->rules.time_to_live += ph->rules.time_to_die;
-			ph->status = _sleep;
 			ms_sleep(ph, ph->rules.time_to_eat);
+			ph->rules.time_to_live = ph->ms_now + ph->rules.time_to_die;
+			ph->status = _sleep;
 		}
 		else if (ph->status == _sleep)
 		{
