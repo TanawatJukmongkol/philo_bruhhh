@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 22:17:04 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:30:12 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <limits.h>
 # include <sys/time.h>
-# include "lib/miniutils/miniutils.h"
 
 typedef struct timeval	t_timeval;
 
@@ -64,6 +64,11 @@ typedef struct s_table
 	int				argc;
 	int				*argv;
 }				t_table;
+
+// miniutils (arg parser)
+int		*argv_getint(int *argc, char **argv);
+char	**argv_splitstr(char const *s, char c);
+int		*argv_aatoai(int *argc, char **argv);
 
 // utils
 void	destroy_mutx(t_table *table);
