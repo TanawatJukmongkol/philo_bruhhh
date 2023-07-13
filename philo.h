@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 00:58:29 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/13 11:41:46 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "lib/miniutils/miniutils.h"
+
+# define PEDANTIC 0
 
 typedef struct timeval	t_timeval;
 

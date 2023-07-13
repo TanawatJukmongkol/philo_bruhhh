@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 01:25:24 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/13 11:21:12 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char**argv)
 				exit(0);
 			i++;
 		}
-		usleep(200);
+		usleep(1);
 	}
 	free_all(&table);
 	return (0);
