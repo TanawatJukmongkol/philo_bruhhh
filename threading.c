@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 15:39:38 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 17:03:10 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	*routine(void *philo)
 		{
 			philo_log(ph, "is eating");
 			ph->rules.time_to_live += ph->rules.time_to_die;
-			ph->status = _sleep;
 			ms_sleep(ph, ph->rules.time_to_eat);
+			ph->status = _sleep;
 		}
 		else if (ph->status == _sleep)
 		{
@@ -99,7 +99,7 @@ int	spawn_philo(t_table *table)
 				routine, &table->philo[i]))
 			return (philo_error(table,
 					"Failed to spawn philo: Failed to create thread."));
-		usleep(5);
+		usleep(1);
 		pthread_detach(table->philo[i].thread);
 		i += 2;
 		if (i >= table->len && i % 2 == 0)

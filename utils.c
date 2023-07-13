@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 15:40:25 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 16:56:49 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,14 @@ void	ms_sleep(t_philo *ph, int ms)
 
 	while (ph->status != _dead)
 	{
-		usleep(1);
 		time = ms_get_epoch();
 		if (time >= ph->rules.time_to_live)
 		{
 			ph->status = _dead;
+			break ;
 		}
 		if (time - ph->ms_now >= ms)
 			break ;
+		usleep(10);
 	}
 }
