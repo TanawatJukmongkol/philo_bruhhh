@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 22:16:58 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:16:13 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	*routine(void *philo)
 	else
 	{
 		ph->status = _think;
-		usleep(500);
+		usleep(4999);
 	}
 	check_loop(ph);
 	return (NULL);

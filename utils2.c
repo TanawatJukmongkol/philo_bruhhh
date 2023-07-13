@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:17:46 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 22:18:11 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:04:40 by Tanawat J.       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_die(t_philo *ph, long time)
 {
 	if (pthread_mutex_lock(ph->mutx_table))
 		return (1);
-	if (time >= ph->rules.time_to_live)
+	if (time > ph->rules.time_to_live)
 	{
 		ph->status = _dead;
 		pthread_mutex_unlock(ph->mutx_table);
