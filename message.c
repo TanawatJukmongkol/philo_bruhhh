@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 22:18:36 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 18:13:43 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:31:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	philo_log(t_philo *ph, char *msg)
 int	philo_error(t_table *table, char *msg)
 {
 	printf("Error: %s\n", msg);
+	destroy_mutx(table);
 	free_all(table);
 	return (1);
 }

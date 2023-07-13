@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 20:29:59 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:54:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	*routine(void *philo)
 		else if (ph->status == _eat)
 		{
 			philo_log(ph, "is eating");
-			ms_sleep(ph, ph->rules.time_to_eat);
 			ph->rules.time_to_live = ph->ms_now + ph->rules.time_to_die;
 			ph->status = _sleep;
+			ms_sleep(ph, ph->rules.time_to_eat);
 		}
 		else if (ph->status == _sleep)
 		{

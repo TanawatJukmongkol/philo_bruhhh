@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 20:56:14 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:34:38 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	main_routine(t_table *table)
 			if (table->philo[i].status == _dead)
 			{
 				destroy_mutx(table);
-				printf("%ld %d died", ms_get_epoch() - table->philo[i].ms_begin, table->philo[i].id);
+				printf("%-8ld %-3d died\n", ms_get_epoch()
+					- table->philo[i].ms_begin, table->philo[i].id);
 				i = -1;
 				while (++i < table->len)
 					table->philo[i].status = _dead;
