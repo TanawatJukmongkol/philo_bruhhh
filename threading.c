@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 22:03:15 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 22:16:58 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,10 @@ int	take_fork(t_philo *ph)
 	}
 	if (!ph->left->fork_taken)
 	{
-		if (PEDANTIC)
-			philo_log(ph, "took the left fork");
 		ph->left->fork_taken = 1;
 	}
 	if (!ph->fork_taken)
 	{
-		if (PEDANTIC)
-			philo_log(ph, "took the right fork");
 		ph->fork_taken = 1;
 		ph->status = _eat;
 		if (ph->rules.eaten < ph->rules.must_eat)
@@ -53,20 +49,8 @@ void	release_fork(t_philo *ph)
 	pthread_mutex_unlock(&ph->mutx_fork);
 }
 
-void	*routine(void *philo)
+void	check_loop(t_philo *ph)
 {
-	t_philo	*ph;
-
-	ph = (t_philo *)philo;
-	ph->ms_now = ms_get_epoch();
-	ph->rules.time_to_live = ph->ms_begin + ph->rules.time_to_die;
-	if (ph->id % 2 == 0 && !ph->fork_taken)
-		take_fork(ph);
-	else
-	{
-		ph->status = _think;
-		usleep(500);
-	}
 	while (ph->status != _dead)
 	{
 		if (ph->status == _think)
@@ -90,6 +74,23 @@ void	*routine(void *philo)
 			ms_sleep(ph, ph->rules.time_to_sleep);
 		}
 	}
+}
+
+void	*routine(void *philo)
+{
+	t_philo	*ph;
+
+	ph = (t_philo *)philo;
+	ph->ms_now = ms_get_epoch();
+	ph->rules.time_to_live = ph->ms_begin + ph->rules.time_to_die;
+	if (ph->id % 2 == 0 && !ph->fork_taken)
+		take_fork(ph);
+	else
+	{
+		ph->status = _think;
+		usleep(500);
+	}
+	check_loop(ph);
 	return (NULL);
 }
 

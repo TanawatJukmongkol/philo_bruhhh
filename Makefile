@@ -6,12 +6,12 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/09 05:42:52 by tjukmong          #+#    #+#              #
-#    Updated: 2023/07/13 22:00:16 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/07/13 22:18:32 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= philo
-SRCS		= philo.c utils.c message.c threading.c
+SRCS		= philo.c utils.c utils2.c message.c threading.c
 
 SRC_DIR		= ./
 LIB_DIR		= ./lib/
@@ -21,9 +21,7 @@ SRC			= ${addprefix ${BUILD_DIR},${SRCS}}
 OBJ			= ${SRC:.c=.o}
 
 CC			= cc
-CFLAGS		= -g -Wall -Werror -Wextra -O3 -fsanitize=address
-# CFLAGS		= -g -Wall -Werror -Wextra -O3
-# CFLAGS		= -g -fsanitize=address
+CFLAGS		= -g -Wall -Werror -Wextra -O3
 
 all: library ${BUILD_DIR} ${NAME}
 

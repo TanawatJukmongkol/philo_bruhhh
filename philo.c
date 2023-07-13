@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 21:34:38 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 22:13:03 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,29 @@ int	parse_args(int argc, char**argv, int *ac, int **av)
 	return (0);
 }
 
+void	death_signal(t_table *table, int i)
+{
+	destroy_mutx(table);
+	printf("%-8ld %-3d died\n", ms_get_epoch()
+		- table->philo[i].ms_begin, table->philo[i].id);
+	i = -1;
+	while (++i < table->len)
+		table->philo[i].status = _dead;
+	return ;
+}
+
+void	all_eaten(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->len)
+		table->philo[i].status = _dead;
+	usleep(15000);
+	printf("-- All Philosophers has eaten %d time(s) --\n", table->argv[4]);
+	return ;
+}
+
 void	main_routine(t_table *table)
 {
 	int	i;
@@ -52,28 +75,12 @@ void	main_routine(t_table *table)
 		while (++i < table->len)
 		{
 			if (table->philo[i].status == _dead)
-			{
-				destroy_mutx(table);
-				printf("%-8ld %-3d died\n", ms_get_epoch()
-					- table->philo[i].ms_begin, table->philo[i].id);
-				i = -1;
-				while (++i < table->len)
-					table->philo[i].status = _dead;
-				return ;
-			}
+				return (death_signal(table, i));
 			nbr += table->philo[i].rules.eaten == table->philo[i]
 				.rules.must_eat;
 		}
-		i = -1;
 		if (table->argc == 5 && nbr == table->len)
-		{
-			while (++i < table->len)
-				table->philo[i].status = _dead;
-			usleep(15000);
-			printf("-- All Philosophers has eaten %d times --\n",
-				table->argv[4]);
-			return ;
-		}
+			return (all_eaten(table));
 	}
 }
 
