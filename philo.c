@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 15:32:45 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:14:58 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	main_routine(t_table *table)
 	while (1)
 	{
 		i = -1;
+		usleep(1);
 		while (++i < table->len)
 		{
 			if (table->philo[i].status == _dead)
@@ -54,11 +55,10 @@ void	main_routine(t_table *table)
 				i = -1;
 				while (++i < table->len)
 					table->philo[i].status = _dead;
-				// free_all(table);
+				free_all(table);
 				return ;
 			}
 		}
-		usleep(1);
 	}
 }
 

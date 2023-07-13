@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 16:56:49 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:16:34 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	init_each_data(t_table *table, int i, int argc, int *argv)
 {
 	table->philo[i].id = i + 1;
 	table->philo[i].mutx_table = &table->mutx;
-	table->philo[i].ms_begin = &table->ms_begin;
 	table->philo[i].fork_taken = 0;
 	table->philo[i].rules.time_to_die = argv[1];
 	table->philo[i].rules.time_to_eat = argv[2];

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 17:03:10 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:17:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*routine(void *philo)
 
 	ph = (t_philo *)philo;
 	ph->ms_now = ms_get_epoch();
-	ph->rules.time_to_live = *ph->ms_begin + ph->rules.time_to_die;
+	ph->rules.time_to_live = ph->ms_begin + ph->rules.time_to_die;
 	if (ph->id % 2 == 0 && !ph->fork_taken)
 		take_fork(ph);
 	else
@@ -95,6 +95,7 @@ int	spawn_philo(t_table *table)
 	table->ms_begin = ms_get_epoch();
 	while (i < table->len)
 	{
+		table->philo[i].ms_begin = table->ms_begin;
 		if (pthread_create(&table->philo[i].thread, NULL,
 				routine, &table->philo[i]))
 			return (philo_error(table,
