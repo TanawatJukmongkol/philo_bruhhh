@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 22:18:36 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/12 22:33:36 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:26:27 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	philo_log(t_philo *ph, char *msg)
 {
-	pthread_mutex_lock(ph->mutx_table);
+	if (pthread_mutex_lock(ph->mutx_table))
+		return ;
 	ph->ms_now = ms_get_epoch();
 	printf("%-8ld %-3d %s\n", ph->ms_now - *ph->ms_begin, ph->id, msg);
 	pthread_mutex_unlock(ph->mutx_table);

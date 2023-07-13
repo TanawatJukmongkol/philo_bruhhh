@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 21:00:41 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 11:31:14 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:39:38 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*routine(void *philo)
 
 	ph = (t_philo *)philo;
 	ph->ms_now = ms_get_epoch();
+	ph->rules.time_to_live = *ph->ms_begin + ph->rules.time_to_die;
 	if (ph->id % 2 == 0 && !ph->fork_taken)
 		take_fork(ph);
 	else
@@ -71,9 +72,9 @@ void	*routine(void *philo)
 		else if (ph->status == _eat)
 		{
 			philo_log(ph, "is eating");
-			ph->rules.time_to_live = ph->rules.time_to_die;
-			ms_sleep(ph, ph->rules.time_to_eat);
+			ph->rules.time_to_live += ph->rules.time_to_die;
 			ph->status = _sleep;
+			ms_sleep(ph, ph->rules.time_to_eat);
 		}
 		else if (ph->status == _sleep)
 		{
@@ -82,7 +83,7 @@ void	*routine(void *philo)
 			ms_sleep(ph, ph->rules.time_to_sleep);
 		}
 	}
-	philo_log(ph, "died");
+	sleep(10);
 	return (NULL);
 }
 

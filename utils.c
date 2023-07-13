@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 20:58:25 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 01:08:46 by Tanawat J.       ###   ########.fr       */
+/*   Updated: 2023/07/13 15:40:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	free_all(t_table *table)
 		table->len--;
 	}
 	if (table->philo)
+	{
 		free(table->philo);
+		table->philo = NULL;
+	}
 	if (table->argv)
 		free(table->argv);
 }
@@ -35,7 +38,6 @@ int	init_each_data(t_table *table, int i, int argc, int *argv)
 	table->philo[i].rules.time_to_die = argv[1];
 	table->philo[i].rules.time_to_eat = argv[2];
 	table->philo[i].rules.time_to_sleep = argv[3];
-	table->philo[i].rules.time_to_live = argv[1];
 	table->philo[i].rules.must_eat = -1;
 	table->philo[i].rules.eaten = 0;
 	if (argc == 5)
@@ -87,23 +89,16 @@ long	ms_get_epoch(void)
 void	ms_sleep(t_philo *ph, int ms)
 {
 	long	time;
-	long	p_time;
 
-	p_time = ms_get_epoch();
 	while (ph->status != _dead)
 	{
 		usleep(1);
 		time = ms_get_epoch();
-		if (p_time < time)
+		if (time >= ph->rules.time_to_live)
 		{
-			ph->rules.time_to_live -= time - p_time;
-			if (ph->rules.time_to_live < 0)
-				break ;
-			p_time = time;
+			ph->status = _dead;
 		}
 		if (time - ph->ms_now >= ms)
 			break ;
 	}
-	if (ph->rules.time_to_live <= 0)
-		ph->status = _dead;
 }

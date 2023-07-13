@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 05:46:35 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 11:41:46 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:00:38 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ enum e_status
 
 typedef struct s_rule
 {
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	time_to_live;
-	int	must_eat;
-	int	eaten;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	long	time_to_live;
+	int		must_eat;
+	int		eaten;
 }	t_rule;
 
 typedef struct s_philo

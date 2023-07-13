@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:07:27 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/07/13 11:21:12 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:32:45 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,32 @@ int	parse_args(int argc, char**argv, int *ac, int **av)
 	return (0);
 }
 
+void	main_routine(t_table *table)
+{
+	int	i;
+
+	while (1)
+	{
+		i = -1;
+		while (++i < table->len)
+		{
+			if (table->philo[i].status == _dead)
+			{
+				philo_log(&table->philo[i], "died");
+				i = -1;
+				while (++i < table->len)
+					table->philo[i].status = _dead;
+				// free_all(table);
+				return ;
+			}
+		}
+		usleep(1);
+	}
+}
+
 int	main(int argc, char**argv)
 {
 	t_table	table;
-	int		i;
 	int		ac;
 	int		*av;
 
@@ -50,18 +72,6 @@ int	main(int argc, char**argv)
 	if (parse_args(argc, argv, &ac, &av) || init_data(&table, ac, av))
 		return (1);
 	spawn_philo(&table);
-	while (1)
-	{
-		i = 0;
-		while (i < table.len)
-		{
-			if (table.philo[i].status == _dead)
-				exit(0);
-			i++;
-		}
-		usleep(1);
-	}
-	free_all(&table);
+	main_routine(&table);
 	return (0);
 }
-
